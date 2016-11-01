@@ -1,0 +1,15 @@
+version: '2'
+services:
+  ghost:
+    build: .
+    ports:
+      - "2368:2368"
+    depends_on:
+      - db
+    entrypoint: /home/ghost/vendor/wait-for-it.sh db:3306
+    volumes:
+      - ./log:/var/log/ghost
+  db:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=ghost-docker
